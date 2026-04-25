@@ -1,0 +1,20 @@
+name: PulseNews — Notificaciones Diarias
+
+on:
+  schedule:
+    - cron: '0 14 * * *'   # 8:00 AM hora Ciudad Juárez (MDT / UTC-6)
+    - cron: '0 1 * * *'    # 7:00 PM hora Ciudad Juárez (MDT / UTC-6)
+  workflow_dispatch:        # Permite disparar manualmente desde GitHub
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Enviar notificación a ntfy
+        run: |
+          curl -s -X POST "https://ntfy.sh/pulsenews-tarinalejandro" \
+            -H "Title: 📈 PulseNews — Noticias listas" \
+            -H "Priority: default" \
+            -H "Tags: newspaper,chart_increasing" \
+            -H "Click: https://tarinalejandro-cloud.github.io/pulsenews" \
+            -d "Tus 10 noticias más importantes del día están listas. Toca para abrir 🗞️"
